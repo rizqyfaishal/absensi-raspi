@@ -33,7 +33,7 @@ def send_email(Nama, Email, Random_Text, jam):
 	# response = requests.request("POST", sending_url_email, data=json.dumps(data),headers=headers)
 	send = send_mail(
 		'Konfirmasi',
-		[jam] + ' Selamat ! Tekan Link Disamping-> absensikampus.herokuapp.com/music/konfirmasi/' + Random_Text + '',
+		' Selamat ! Tekan Link Disamping-> absensikampus.herokuapp.com/music/konfirmasi/' + Random_Text + '',
 		'absensi@vektorprojects.com',
 		[Email],
 		fail_silently=False
@@ -47,7 +47,7 @@ def get_mac_address_data_from_raspi(request):
 		print(req)
 		referensis = Referensi.objects.filter(MAC_Address__in=req['mac_address'])
 		kelas = req['kelas']
-		jam = req['jam']
+	
 
 		if len(referensis) > 0:
 			absensi = [A for A in Absensi.objects.filter(NPM__in=[Ref for Ref in referensis])]
