@@ -52,7 +52,7 @@ class Enrollment(models.Model):
     Matkul = models.ForeignKey(Matkul, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.Referensi.NPM + ' - ' + self.Matkul.Nama_Matkul
+        return self.Referensi.Nama + ' - ' + self.Matkul.Nama_Matkul
 
 
 
