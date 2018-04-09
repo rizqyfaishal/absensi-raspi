@@ -47,7 +47,7 @@ def get_mac_address_data_from_raspi(request):
 		print(req)
 		referensis = Referensi.objects.filter(MAC_Address__in=req['mac_address'])
 		kelas = req['kelas']
-		
+		jam = req['jam']
 
 		if len(referensis) > 0:
 			absensi = [A for A in Absensi.objects.filter(NPM__in=[Ref for Ref in referensis])]
