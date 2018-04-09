@@ -38,7 +38,6 @@ class Jadwal(models.Model):
 
 class Absensi(models.Model):
     Jadwal = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
-    Kelas = models.CharField(max_length=10)
     Referensi = models.ForeignKey(Referensi, on_delete=models.CASCADE)
     Timestamp = models.DateTimeField(auto_now_add=True)
     Email_Confirmed = models.BooleanField(default=False)
