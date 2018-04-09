@@ -37,6 +37,8 @@ class Jadwal(models.Model):
         return self.Matkul.Nama_Matkul + ' - ' + self.Ruangan + ' - ' + str(self.Mulai) + ' s/d ' + str(self.Selesai)
 
 class Absensi(models.Model):
+    Kelas = models.CharField(max_length=10)
+    NPM = models.ForeignKey(Referensi, on_delete=models.CASCADE)
     Jadwal = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
     Referensi = models.ForeignKey(Referensi, on_delete=models.CASCADE)
     Timestamp = models.DateTimeField(auto_now_add=True)
