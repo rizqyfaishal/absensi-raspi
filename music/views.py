@@ -33,7 +33,7 @@ def send_email(Nama, Email, Random_Text, jam):
 	# response = requests.request("POST", sending_url_email, data=json.dumps(data),headers=headers)
 	send = send_mail(
 		'Konfirmasi',
-		jam + ' Selamat ! Tekan Link Disamping-> absensikampus.herokuapp.com/music/konfirmasi/' + Random_Text + '',
+		[jam] + ' Selamat ! Tekan Link Disamping-> absensikampus.herokuapp.com/music/konfirmasi/' + Random_Text + '',
 		'absensi@vektorprojects.com',
 		[Email],
 		fail_silently=False
