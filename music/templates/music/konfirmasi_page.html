@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Konfirmasi Page</title>
+</head>
+<body>
+	<form action="{% url 'process_konfirmasi_password' %}" method="POST">
+		{% csrf_token %}
+		<input type="password" name="password" placeholder="Type your password">
+		<input type="hidden" name="random_text" value="{{ random_text }}">
+		<input type="submit" name="submit">
+	</form>
+</body>
+</html>
