@@ -45,7 +45,7 @@ class Absensi(models.Model):
     Random_Text = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.NPM.Nama + ' - ' + self.NPM.NPM
+        return self.Referensi.Nama + ' - ' + self.Referensi.NPM
 
 class Enrollment(models.Model):
     Referensi = models.ForeignKey(Referensi, on_delete=models.CASCADE)
