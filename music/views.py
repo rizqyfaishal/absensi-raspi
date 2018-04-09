@@ -12,7 +12,7 @@ import json
 def index(request):
     return HttpResponse("<h1>Hello")
 
-def send_email(Nama, Email, Random_Text):
+def send_email(Nama, Email, Random_Text, jam):
 	# sending_url_email = "https://api.sendinblue.com/v3/smtp/email"
 	# data = {
 	# 	'sender':{'name': 'Ekmal Rizki', 'email': 'ekmal.milan@yahoo.com'},
@@ -33,7 +33,7 @@ def send_email(Nama, Email, Random_Text):
 	# response = requests.request("POST", sending_url_email, data=json.dumps(data),headers=headers)
 	send = send_mail(
 		'Konfirmasi',
-		'Selamat ! Tekan Link Disamping-> ekmal.herokuapp.com/music/konfirmasi/' + Random_Text + '',
+		jam + ' Selamat ! Tekan Link Disamping-> ekmal.herokuapp.com/music/konfirmasi/' + Random_Text + '',
 		'absensi@vektorprojects.com',
 		[Email],
 		fail_silently=False
@@ -47,6 +47,7 @@ def get_mac_address_data_from_raspi(request):
 		print(req)
 		referensis = Referensi.objects.filter(MAC_Address__in=req['mac_address'])
 		kelas = req['kelas']
+		jam =  req['jam']
 
 		if len(referensis) > 0:
 			absensi = [A for A in Absensi.objects.filter(NPM__in=[Ref for Ref in referensis])]
