@@ -16,8 +16,8 @@ def send_email(nama, email, random_text, jam):
 	try:
 		send = send_mail(
 			'Konfirmasi',
-			'Selamat ! Tekan Link Disamping-> <a href="localhost:absensikampus.herokuapp.com/absensi/konfirmasi/' + random_text
-				+ '">Konfirmasi</a>' + str(jam),
+			str(jam) + 'Selamat ! Tekan Link Disamping-> <a href="localhost:absensikampus.herokuapp.com/absensi/konfirmasi/' + random_text
+				+ '">Konfirmasi</a>',
 			'absensi@vektorprojects.com',
 			[email],
 			fail_silently=False
