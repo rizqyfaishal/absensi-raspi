@@ -55,11 +55,14 @@ def get_mac_address_data_from_raspi(request):
 			mulai__lte=raspi_time,
 			selesai__gte=raspi_time).first()
 		print(jadwal_kuliah)
+		print(weekday)
+		print(raspi_time)
 		print(str(raspi_datetime))
 		if jadwal_kuliah is not None:
 			referensis = Referensi.objects.filter(
 				mac_address__in=req['mac_address'],
 				enrollment__matkul=jadwal_kuliah.matkul)
+			print(referensis)
 			if len(referensis) > 0: 
 				referensi_email_sended = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
