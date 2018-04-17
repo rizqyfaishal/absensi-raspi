@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" initial-scale="1.0">
+	<title>Form Registrasi</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center">Form Registrasi</h1>
+		<form action="{% url 'process_registrasi' %}" method="POST" content-type="application/json" class="custom-form">
+			{% csrf_token %}
+			<div class="form-group">
+				<label>Nama</label>
+				<input class="form-control" type="text" name="nama" placeholder="Type your Name">
+			</div>
+
+			<div class="form-group">
+				<label>NPM</label>
+				<input class="form-control" type="text" name="npm" placeholder="Type your NPM">
+			</div>
+
+			<div class="form-group">
+				<label>Email</label>
+				<input class="form-control" type="text" name="email" placeholder="Type your Email">
+			</div>
+			
+			
+			<div class="form-group">
+				<label>MAC Address:</label>
+				<input class="form-control" type="text" name="mac-address" placeholder="Type your MAC Address">
+			</div>
+
+			<div class="form-group">
+				<label>Pilih Mata Kuliah</label>
+				<select multiple="true" name="daftar-matkul" class="form-control">
+					{% for matkul in daftar_matkul %}
+						<option value="{{ matkul.id }}">{{ matkul.nama_matkul }}</option>
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Password</label>
+				<input class="form-control" type="password" name="password" placeholder="Type your Password">
+			</div>
+
+			<input type="submit" name="submit" class="btn btn-success">
+		</form>
+	</div>
+</body>
+</html>
