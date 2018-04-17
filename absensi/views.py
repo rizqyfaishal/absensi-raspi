@@ -6,7 +6,7 @@ from django.core import serializers
 from django.core.mail import send_mail, BadHeaderError
 from django.http import Http404
 from django.db import IntegrityError
-from datetime import datetime, time
+from datetime import datetime, time, date
 import secrets
 import requests
 import json
@@ -64,7 +64,7 @@ def get_mac_address_data_from_raspi(request):
 				enrollment__matkul=jadwal_kuliah.matkul)
 			print(referensis)
 			if len(referensis) > 0:
-				curr_date = datetime.date()
+				curr_date = date.today()
 				referensi_email_sended = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
 					referensi__in=referensis,
