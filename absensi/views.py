@@ -63,14 +63,15 @@ def get_mac_address_data_from_raspi(request):
 				mac_address__in=req['mac_address'],
 				enrollment__matkul=jadwal_kuliah.matkul)
 			print(referensis)
-			if len(referensis) > 0: 
+			if len(referensis) > 0:
+				curr_date = datetime.date()
 				referensi_email_sended = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
 					referensi__in=referensis,
 					email_sended=True,
-					timestamp__gte=datetime.date()
+					timestamp__gte=datetime(curr_date.year, curr_date.month, curr_date.day)
 				)
-				print(datetime.today())
+				print(datetime(curr_date.year, curr_date.month, curr_date.day))
 				print(referensi_email_sended)
 				referensi_to_be_sended = []
 				for ref in referensis:
