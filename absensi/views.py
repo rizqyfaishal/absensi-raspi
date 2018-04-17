@@ -72,11 +72,15 @@ def get_mac_address_data_from_raspi(request):
 				)
 				referensi_to_be_sended = []
 				for ref in referensis:
+					include = True
 					for ref_sended in referensi_email_sended:
-						if ref != ref_sended:
-							referensi_to_be_sended.append(True)
-						else:
-							referensi_to_be_sended.append(False)
+						if ref == ref_sended:
+							include = False
+					if include:
+						referensi_to_be_sended.append(True)
+					else:
+						referensi_to_be_sended.append(False)
+	
 				print(referensi_to_be_sended)
 				for i in range(len(referensi_to_be_sended)):
 					referensi = referensis[i]
