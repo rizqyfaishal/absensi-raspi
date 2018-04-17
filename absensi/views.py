@@ -68,8 +68,9 @@ def get_mac_address_data_from_raspi(request):
 					jadwal=jadwal_kuliah,
 					referensi__in=referensis,
 					email_sended=True,
-					timestamp__gte=datetime.today()
+					# timestamp__gte=datetime.today()
 				)
+				print(datetime.today())
 				print(referensi_email_sended)
 				referensi_to_be_sended = []
 				for ref in referensis:
