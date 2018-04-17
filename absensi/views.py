@@ -54,6 +54,7 @@ def get_mac_address_data_from_raspi(request):
 			hari=week_day,
 			mulai__lte=raspi_time,
 			selesai__gte=raspi_time).first()
+		print(jadwal_kuliah)
 		if jadwal_kuliah is not None:
 			referensis = Referensi.objects.filter(
 				mac_address__in=req['mac_address'],
