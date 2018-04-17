@@ -56,7 +56,7 @@ def get_mac_address_data_from_raspi(request):
 		referensis = Referensi.objects.filter(
 			mac_address__in=req['mac_address'],
 			enrollment__matkul=jadwal_kuliah.matkul)
-		if len(referensis) > 0:
+		if len(referensis) > 0 and jadwal_kuliah is not None: 
 			referensi_email_sended = Absensi.objects.filter(
 				jadwal=jadwal_kuliah,
 				referensi__in=referensis,
