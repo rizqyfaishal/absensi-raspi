@@ -55,7 +55,7 @@ def get_mac_address_data_from_raspi(request):
 			mulai__lte=raspi_time,
 			selesai__gte=raspi_time).first()
 		print(jadwal_kuliah)
-		print(weekday)
+		print(week_day)
 		print(raspi_time)
 		print(str(raspi_datetime))
 		if jadwal_kuliah is not None:
