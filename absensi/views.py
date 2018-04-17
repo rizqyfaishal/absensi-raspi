@@ -41,6 +41,7 @@ def send_email_salah_kelas(nama, email, random_text, jam):
 
 @csrf_exempt
 def get_mac_address_data_from_raspi(request):
+	data_to_return = []
 	try:
 		req = json.loads(request.body)
 		ruangan = req['ruangan']
@@ -71,7 +72,6 @@ def get_mac_address_data_from_raspi(request):
 							referensi_to_be_sended.append(True)
 						else:
 							referensi_to_be_sended.append(False)
-				data_to_return = []
 				for i in range(len(referensi_to_be_sended)):
 					referensi = referensis[i]
 					secret_text = secrets.token_urlsafe(16)
@@ -85,7 +85,7 @@ def get_mac_address_data_from_raspi(request):
 							data_to_return.append(created_absensi.referensi.mac_address)
 					else:
 						status_email = send_email_salah_kelas(referensi.nama, referensi.email, secret_text, raspi_time)
-				return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
+		return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
 	except Referensi.DoesNotExist:
 		raise Http404
 
