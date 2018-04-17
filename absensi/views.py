@@ -77,11 +77,14 @@ def get_mac_address_data_from_raspi(request):
 							referensi_to_be_sended.append(True)
 						else:
 							referensi_to_be_sended.append(False)
+				print(referensi_to_be_sended)
 				for i in range(len(referensi_to_be_sended)):
 					referensi = referensis[i]
+					print(referensi)
 					secret_text = secrets.token_urlsafe(16)
 					if referensi_to_be_sended[i]:
 						status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
+						print(status_email)
 						if status_email == 1:
 							created_absensi = Absensi.objects.create(
 								jadwal=jadwal_kuliah, 
