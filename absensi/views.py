@@ -53,38 +53,39 @@ def get_mac_address_data_from_raspi(request):
 			hari=week_day,
 			mulai__lte=raspi_time,
 			selesai__gte=raspi_time).first()
-		referensis = Referensi.objects.filter(
-			mac_address__in=req['mac_address'],
-			enrollment__matkul=jadwal_kuliah.matkul)
-		if len(referensis) > 0 and jadwal_kuliah is not None: 
-			referensi_email_sended = Absensi.objects.filter(
-				jadwal=jadwal_kuliah,
-				referensi__in=referensis,
-				email_sended=False,
-				timestamp__gte=datetime.today()
-			)
-			referensi_to_be_sended = []
-			for ref in referensis:
-				for ref_sended in referensi_email_sended:
-					if ref != ref_sended:
-						referensi_to_be_sended.append(True)
+		if jadwal_kuliah is not None:
+			referensis = Referensi.objects.filter(
+				mac_address__in=req['mac_address'],
+				enrollment__matkul=jadwal_kuliah.matkul)
+			if len(referensis) > 0: 
+				referensi_email_sended = Absensi.objects.filter(
+					jadwal=jadwal_kuliah,
+					referensi__in=referensis,
+					email_sended=False,
+					timestamp__gte=datetime.today()
+				)
+				referensi_to_be_sended = []
+				for ref in referensis:
+					for ref_sended in referensi_email_sended:
+						if ref != ref_sended:
+							referensi_to_be_sended.append(True)
+						else:
+							referensi_to_be_sended.append(False)
+				data_to_return = []
+				for i in range(len(referensi_to_be_sended)):
+					referensi = referensis[i]
+					secret_text = secrets.token_urlsafe(16)
+					if referensi_to_be_sended[i]:
+						status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
+						if status_email == 1:
+							created_absensi = Absensi.objects.create(
+								jadwal=jadwal_kuliah, 
+								referensi=referensi, 
+								random_text=secret_text)
+							data_to_return.append(created_absensi.referensi.mac_address)
 					else:
-						referensi_to_be_sended.append(False)
-			data_to_return = []
-			for i in range(len(referensi_to_be_sended)):
-				referensi = referensis[i]
-				secret_text = secrets.token_urlsafe(16)
-				if referensi_to_be_sended[i]:
-					status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
-					if status_email == 1:
-						created_absensi = Absensi.objects.create(
-							jadwal=jadwal_kuliah, 
-							referensi=referensi, 
-							random_text=secret_text)
-						data_to_return.append(created_absensi.referensi.mac_address)
-				else:
-					status_email = send_email_salah_kelas(referensi.nama, referensi.email, secret_text, raspi_time)
-			return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
+						status_email = send_email_salah_kelas(referensi.nama, referensi.email, secret_text, raspi_time)
+				return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
 	except Referensi.DoesNotExist:
 		raise Http404
 
