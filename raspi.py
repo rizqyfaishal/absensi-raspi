@@ -17,8 +17,7 @@ while True:
     #     mac_address_store.add(ma)
 
     print "found %d devices" % len(nearby_devices)
-    response = requests.request("POST", "http://absensikampus.herokuapp.com/absensi/forward-data", \
-        ,data=json.dumps({"mac_address":mac_address, "ruangan":"K301", "timestamp_raspi": str(time.time())}))
+    response = requests.request("POST", "http://absensikampus.herokuapp.com/absensi/forward-data",data=json.dumps({"mac_address":mac_address, "ruangan":"K301", "timestamp_raspi": str(time.time())}))
 
     print(response.text)
 
