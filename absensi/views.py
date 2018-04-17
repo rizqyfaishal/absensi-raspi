@@ -16,8 +16,8 @@ def send_email(nama, email, random_text, jam):
 	try:
 		send = send_mail(
 			'Konfirmasi',
-			'Selamat ! Tekan Link Disamping-> <a href="localhost:8000/absensi/konfirmasi/' + random_text
-				+ '">Konfirmasi</a>',
+			'Selamat ! Tekan Link Disamping-> <a href="localhost:absensikampus.herokuapp.com/absensi/konfirmasi/' + random_text
+				+ '">Konfirmasi</a>' + str(jam),
 			'absensi@vektorprojects.com',
 			[email],
 			fail_silently=False
@@ -83,7 +83,7 @@ def get_mac_address_data_from_raspi(request):
 							random_text=secret_text)
 						data_to_return.append(created_absensi.referensi.mac_address)
 				else:
-					status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
+					status_email = send_email_salah_kelas(referensi.nama, referensi.email, secret_text, raspi_time)
 			return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
 	except Referensi.DoesNotExist:
 		raise Http404
