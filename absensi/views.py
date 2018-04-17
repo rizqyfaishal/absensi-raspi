@@ -70,7 +70,7 @@ def get_mac_address_data_from_raspi(request):
 					email_sended=True,
 					timestamp__gte=datetime.today()
 				)
-				print(referensi_to_be_sended)
+				print(referensi_email_sended)
 				referensi_to_be_sended = []
 				for ref in referensis:
 					include = True
