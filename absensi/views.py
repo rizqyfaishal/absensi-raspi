@@ -73,6 +73,7 @@ def get_mac_address_data_from_raspi(request):
 				referensi_wrong_class = []
 				for ref in referensis:
 					matkuls = [enroll.matkul for enroll in ref.enrollment_set.all()]
+					print(matkuls)
 					if jadwal_kuliah.matkul in matkuls:
 						referensi_match_class.append(ref)
 					else:
@@ -87,6 +88,8 @@ def get_mac_address_data_from_raspi(request):
 					referensi_match_class for ca in current_absensi if ref_match != ca.referensi]
 				print(datetime(curr_date.year, curr_date.month, curr_date.day))
 				print(referensi_to_be_sended)
+				print(referensi_match_class)
+				print(referensi_wrong_class)
 				for referensi in referensi_to_be_sended:
 					print(referensi)
 					secret_text = secrets.token_urlsafe(16)
