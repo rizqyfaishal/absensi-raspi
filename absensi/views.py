@@ -62,7 +62,7 @@ def get_mac_address_data_from_raspi(request):
 			referensis = Referensi.objects.filter(
 				mac_address__in=req['mac_address'],
 				enrollment__matkul=jadwal_kuliah.matkul)
-			referensis_all = Referensi.objects.filter(
+			referensi_all = Referensi.objects.filter(
 				mac_address__in=req['mac_address']
 			)
 			print(referensis)
@@ -86,11 +86,10 @@ def get_mac_address_data_from_raspi(request):
 					for ref_sended in referensi_email_sended:
 						if ref == ref_sended.referensi:
 							include = 3
-
 					referensi_to_be_sended.append(include)
 				print(referensi_to_be_sended)
 				for i in range(len(referensi_to_be_sended)):
-					referensi = referensis[i]
+					referensi = referensis_all[i]
 					print(referensi)
 					secret_text = secrets.token_urlsafe(16)
 					if referensi_to_be_sended[i] == 1:
