@@ -77,7 +77,7 @@ def get_mac_address_data_from_raspi(request):
 				print(datetime(curr_date.year, curr_date.month, curr_date.day))
 				print(referensi_email_sended)
 				referensi_to_be_sended = []
-				for ref in referensis_all:
+				for ref in referensi_all:
 					include = 1
 					for ref_t in referensis:
 						if ref != ref_t:
