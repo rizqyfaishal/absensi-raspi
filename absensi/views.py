@@ -66,7 +66,7 @@ def get_mac_address_data_from_raspi(request):
 				mac_address__in=req['mac_address']
 			)
 			print(referensis)
-			if len(referensis) > 0:
+			if len(referensi_all) > 0:
 				curr_date = date.today()
 				referensi_email_sended = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
