@@ -6,7 +6,7 @@ from django.core import serializers
 from django.core.mail import send_mail, BadHeaderError
 from django.http import Http404
 from django.db import IntegrityError
-from datetime import datetime, time
+from datetime import datetime, time, date
 import secrets
 import requests
 import json
@@ -63,27 +63,46 @@ def get_mac_address_data_from_raspi(request):
 				mac_address__in=req['mac_address'],
 				enrollment__matkul=jadwal_kuliah.matkul)
 			print(referensis)
-			if len(referensis) > 0: 
+			if len(referensis) > 0:
+				curr_date = date.today()
 				referensi_email_sended = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
 					referensi__in=referensis,
 					email_sended=True,
-					timestamp__gte=datetime.today()
+					timestamp__gte=datetime(curr_date.year, curr_date.month, curr_date.day)
 				)
+				print(datetime(curr_date.year, curr_date.month, curr_date.day))
+				print(referensi_email_sended)
 				referensi_to_be_sended = []
 				for ref in referensis:
+					include = True
 					for ref_sended in referensi_email_sended:
+<<<<<<< HEAD
 						if ref != ref_sended:
 							referensi_to_be_sended.append(True)
 						else:
 							referensi_to_be_sended.append(False)
+=======
+						if ref == ref_sended.referensi:
+							include = False
+					if include:
+						referensi_to_be_sended.append(True)
+					else:
+						referensi_to_be_sended.append(False)
+
+>>>>>>> 7ec6636620c0e6f53c472a9743a5189fa248aabb
 				print(referensi_to_be_sended)
 				for i in range(len(referensi_to_be_sended)):
 					referensi = referensis[i]
+					print(referensi)
 					secret_text = secrets.token_urlsafe(16)
 					if referensi_to_be_sended[i]:
 						status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
+<<<<<<< HEAD
 						
+=======
+						print(status_email)
+>>>>>>> 7ec6636620c0e6f53c472a9743a5189fa248aabb
 						if status_email == 1:
 							created_absensi = Absensi.objects.create(
 								jadwal=jadwal_kuliah, 
