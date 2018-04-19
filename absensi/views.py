@@ -62,6 +62,9 @@ def get_mac_address_data_from_raspi(request):
 			referensis = Referensi.objects.filter(
 				mac_address__in=req['mac_address'],
 				enrollment__matkul=jadwal_kuliah.matkul)
+			referensis_all = Referensi.objects.filter(
+				mac_address__in=req['mac_address']
+			)
 			print(referensis)
 			if len(referensis) > 0:
 				curr_date = date.today()
@@ -74,21 +77,23 @@ def get_mac_address_data_from_raspi(request):
 				print(datetime(curr_date.year, curr_date.month, curr_date.day))
 				print(referensi_email_sended)
 				referensi_to_be_sended = []
-				for ref in referensis:
-					include = True
+				for ref in referensis_all:
+					include = 1
+					for ref_t in referensis:
+						if ref != ref_t:
+							include = 2
+
 					for ref_sended in referensi_email_sended:
 						if ref == ref_sended.referensi:
-							include = False
-					if include:
-						referensi_to_be_sended.append(True)
-					else:
-						referensi_to_be_sended.append(False)
+							include = 3
+
+					referensi_to_be_sended.append(include)
 				print(referensi_to_be_sended)
 				for i in range(len(referensi_to_be_sended)):
 					referensi = referensis[i]
 					print(referensi)
 					secret_text = secrets.token_urlsafe(16)
-					if referensi_to_be_sended[i]:
+					if referensi_to_be_sended[i] == 1:
 						status_email = send_email(referensi.nama, referensi.email, secret_text, raspi_time)
 						print(status_email)
 						if status_email == 1:
@@ -97,7 +102,7 @@ def get_mac_address_data_from_raspi(request):
 								referensi=referensi, 
 								random_text=secret_text)
 							data_to_return.append(created_absensi.referensi.mac_address)
-					else:
+					elif referensi_to_be_sended[i] == 2:
 						status_email = send_email_salah_kelas(referensi.nama, referensi.email, secret_text, raspi_time)
 		return HttpResponse(json.dumps(data_to_return), content_type='application/json')	
 	except Referensi.DoesNotExist:
