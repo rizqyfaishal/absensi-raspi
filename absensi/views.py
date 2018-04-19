@@ -67,7 +67,7 @@ def get_mac_address_data_from_raspi(request):
 				mac_address__in=req['mac_address']
 			)
 			print(referensis)
-			if len(referensi_all) > 0:
+			if len(referensis) > 0:
 				curr_date = date.today()
 				referensi_match_class = []
 				referensi_wrong_class = []
