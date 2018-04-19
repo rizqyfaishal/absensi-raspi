@@ -57,7 +57,9 @@ class Enrollment(models.Model):
         return self.referensi.nama + ' - ' + self.matkul.nama_matkul
 
 
-
+class WrongClass(models.Model):
+    referensi = models.ForeignKey(Referensi, on_delete=models.CASCADE)
+    jadwal = models.ForeignKey(Referensi, on_delete=models.CASCADE)
 
 
     

@@ -84,8 +84,10 @@ def get_mac_address_data_from_raspi(request):
 					email_sended=True,
 					timestamp__gte=datetime(curr_date.year, curr_date.month, curr_date.day)
 				)
-				referensi_to_be_sended = [ref_match for ref_match in \
-					referensi_match_class for ca in current_absensi if ref_match != ca.referensi]
+				referensi_to_be_sended = []
+				for ref in referensi_match_class:
+					if ref not in [ca.referensi for ca in current_absensi]:
+						referensi_to_be_sended.append(ref)
 				print(datetime(curr_date.year, curr_date.month, curr_date.day))
 				print(referensi_to_be_sended)
 				print(referensi_match_class)
