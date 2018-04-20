@@ -79,7 +79,7 @@ def get_mac_address_data_from_raspi(request):
 					else:
 						wc = WrongClass.objects.filter(
 							referensi=ref, 
-							matkul=jadwal_kuliah.matkul,
+							jadwal=jadwal_kuliah,
 							timestamp__gte=datetime(curr_date.year, curr_date.month, curr_date.day)
 						).first()
 						if wc is None:
