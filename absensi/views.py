@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Referensi, Absensi, Matkul, Enrollment, Jadwal
+from .models import Referensi, Absensi, Matkul, Enrollment, Jadwal, WrongClass
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.core.mail import send_mail, BadHeaderError
@@ -77,7 +77,15 @@ def get_mac_address_data_from_raspi(request):
 					if jadwal_kuliah.matkul in matkuls:
 						referensi_match_class.append(ref)
 					else:
-						referensi_wrong_class.append(ref)
+						wc = WrongClass.objects.filter(
+							referensi=ref, 
+							matkul=jadwal_kuliah.matkul,
+							timestamp__gte=datetime(curr_date.year, curr_date.month, curr_date.day)
+						).first()
+						if wc is None:
+							referensi_wrong_class.append(ref)
+							created_wc = WrongClass.objects.create(referensi=ref,
+								matkul=matkul, timestamp=datetime.today())
 				current_absensi = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
 					referensi__in=referensi_match_class,

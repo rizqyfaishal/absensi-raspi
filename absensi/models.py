@@ -56,11 +56,13 @@ class Enrollment(models.Model):
     def __str__(self):
         return self.referensi.nama + ' - ' + self.matkul.nama_matkul
 
-
 class WrongClass(models.Model):
     referensi = models.ForeignKey(Referensi, on_delete=models.CASCADE)
-    jadwal = models.ForeignKey(Referensi, on_delete=models.CASCADE)
+    jadwal = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.timestamp)
 
     
 
