@@ -85,7 +85,7 @@ def get_mac_address_data_from_raspi(request):
 						if wc is None:
 							referensi_wrong_class.append(ref)
 							created_wc = WrongClass.objects.create(referensi=ref,
-								matkul=matkul, timestamp=datetime.today())
+								jadwal=jadwal_kuliah, timestamp=datetime.today())
 				current_absensi = Absensi.objects.filter(
 					jadwal=jadwal_kuliah,
 					referensi__in=referensi_match_class,
